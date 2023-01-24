@@ -13,15 +13,21 @@ IMG_WIDTH = 1920
 DATASET_SIZE=15
 DATASET_COLOR_CHANNELS = 1
 batch_size = 3
-crack_model_location = '/home/christian/Desktop/Rowan CREATEs/Crack CNN/Hydra II/models/crack_detection_4.h5'
-pothole_model_location = '/home/christian/Desktop/Rowan CREATEs/Crack CNN/Hydra II/models/pothole_detection_4.h5'
-data_path = '/home/christian/Desktop/Rowan CREATEs/Crack CNN/SmallSet'
-coordinate_path = './coordinates.csv'
 class_names = [0, 1]
 crack_predictions = []
 pothole_predictions = []
 output_array = []
 PCI_BIAS = 1
+
+#these are the file paths that must be edited to read and write to databases
+data_path = '/home/christian/Desktop/Rowan CREATEs/Crack CNN/SmallSet'
+coordinate_path = './coordinates.csv'
+output_path = '.output.csv'
+
+#These are the locations of the models, I have to see if I can compress them in some way.
+crack_model_location = '/home/christian/Desktop/Rowan CREATEs/Crack CNN/Hydra II/models/crack_detection_4.h5'
+pothole_model_location = '/home/christian/Desktop/Rowan CREATEs/Crack CNN/Hydra II/models/pothole_detection_4.h5'
+
 
 def load_and_predict(img_path, loaded_model):
     img = tf.keras.utils.load_img(
@@ -64,7 +70,7 @@ dir_list = os.listdir(data_path)
 print(dir_list)
 csv_file = open(coordinate_path, mode ='r')
 csv_data = list(csv.reader(csv_file))
-csv_out = open('output.csv', mode='a')
+csv_out = open(output_path, mode='a')
 
 crack_model = import_model(crack_model_location)
 gather_and_write(crack_predictions, False, crack_model)
